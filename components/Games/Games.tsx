@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Text, Image, ScrollView, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { images } from '../../data/images';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NavigationHelpersContext, ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Game {
   name: string;
@@ -26,6 +27,11 @@ const Games = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('isLoggedIn');
+    navigation.navigate('Login');
+    console.log('Logout successful');
+  };
 
   useEffect(() => {
     axios
@@ -47,6 +53,9 @@ const Games = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Logout</Text>
+      </TouchableOpacity>
       <TextInput
         style={styles.searchInput}
         placeholder="Search Games by name"
@@ -128,6 +137,16 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 5,
   },
+  logoutButton: {
+    marginTop:10,
+    backgroundColor: 'black',
+    borderRadius: 5,
+    padding: 10,
+  },
+  logoutButtonText: {
+    color: 'white',
+    fontSize: 16,
+  }
 });
 
 export default Games;
