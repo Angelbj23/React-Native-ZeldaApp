@@ -44,7 +44,7 @@ const Games = () => {
       });
   }, []);
   const handleCardPress = (id: string) => {
-    navigation.navigate('SingleGame', { id: id });
+    navigation.navigate('SingleGame', { id });
   };
 
   const filteredGames = gamesData.filter((game) =>
@@ -138,7 +138,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   logoutButton: {
+    alignSelf:'flex-end',
     marginTop:10,
+    marginRight:5,
     backgroundColor: 'black',
     borderRadius: 5,
     padding: 10,

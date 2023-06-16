@@ -16,8 +16,20 @@ interface Game {
 const Favorites = () => {
   const [favorites, setFavorites] = useState<Game[]>([]);
 
+  const getFavorites = async () => {
+    try {
+      const storedFavorites = await AsyncStorage.getItem('favorites');
+      if (storedFavorites) {
+        const parsedFavorites: Game[] = JSON.parse(storedFavorites);
+        setFavorites(parsedFavorites);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const getFavorites = async () => {
+   (async () => {
       try {
         const storedFavorites = await AsyncStorage.getItem('favorites');
         if (storedFavorites) {
@@ -27,14 +39,12 @@ const Favorites = () => {
       } catch (error) {
         console.log(error);
       }
-    };
-
-    getFavorites();
+    })()
   }, []);
 
   const getGameImage = (id: string) => {
-    const image = images.find((img) => img.id === id);
-    return image ? image.url : '';
+    const image = images.find((img) => img.id === id)?.url;
+    return image ?? '';
   };
 
   const removeFromFavorites = async (gameId: string) => {
