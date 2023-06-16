@@ -3,9 +3,8 @@ import axios from 'axios';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { images } from '../../data/images';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface Game {
   name: string;
@@ -31,13 +30,13 @@ interface SingleGameProps {
   };
 }
 
-const SingleGame: React.FC<SingleGameProps> = ({ route }) => {  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+const SingleGame: React.FC<SingleGameProps> = ({ route }) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const { id } = route.params;
   const [gameData, setGameData] = useState<Game | null>(null);
   const [isInFavorites, setIsInFavorites] = useState<boolean>(false);
   const [addMessage, setAddMessage] = useState<string>('');
   const [removeMessage, setRemoveMessage] = useState<string>('');
-  
 
   const handleGoToFavorites = () => {
     navigation.navigate('Favorites');
@@ -130,34 +129,24 @@ const SingleGame: React.FC<SingleGameProps> = ({ route }) => {  const navigation
             <Text style={styles.releaseDate}>Release Date: {gameData.released_date}</Text>
 
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={ [styles.button, styles.addButton]}
-                onPress={handleAddToFavorites}
-              >
+              <TouchableOpacity style={[styles.button, styles.addButton]} onPress={handleAddToFavorites}>
                 <Text style={styles.buttonText}>Add to favorites</Text>
               </TouchableOpacity>
-              {addMessage !== '' && (
-                <Text style={styles.successMessage}>{addMessage}</Text>
-              )}
+              {addMessage !== '' && <Text style={styles.successMessage}>{addMessage}</Text>}
 
-              <TouchableOpacity
-                style={ [styles.button, styles.removeButton]}
-                onPress={handleRemoveFromFavorites}
-              >
+              <TouchableOpacity style={[styles.button, styles.removeButton]} onPress={handleRemoveFromFavorites}>
                 <Text style={styles.buttonText}>Remove from Favorites</Text>
               </TouchableOpacity>
-              {removeMessage !== '' && (
-                <Text style={styles.errorMessage}>{removeMessage}</Text>
-              )}
+              {removeMessage !== '' && <Text style={styles.errorMessage}>{removeMessage}</Text>}
             </View>
 
-            <TouchableOpacity style={ [styles.button, styles.addButton ]} onPress={handleGoToFavorites}>
+            <TouchableOpacity style={[styles.button, styles.addButton]} onPress={handleGoToFavorites}>
               <Text style={styles.buttonText}>Favorites</Text>
             </TouchableOpacity>
           </View>
         </>
       ) : (
-        <Text style = { styles.loading }>Please Wait... Loading...</Text>
+        <Text style={styles.loading}>Please Wait... Loading...</Text>
       )}
     </View>
   );
@@ -219,10 +208,10 @@ const styles = StyleSheet.create({
     minWidth: '60%',
   },
   addButton: {
-    backgroundColor: '#008f39'
+    backgroundColor: '#008f39',
   },
   removeButton: {
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   buttonText: {
     color: 'white',
@@ -233,7 +222,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 22
+    fontSize: 22,
   },
   successMessage: {
     color: 'green',
